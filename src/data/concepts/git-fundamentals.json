@@ -1,0 +1,200 @@
+{
+  "id": "git-fundamentals",
+  "toolId": "git",
+  "name": "Git Fundamentals",
+  "description": "Master Git basics including repositories, commits, and essential commands for version control",
+  "difficulty": "beginner",
+  "definitions": {
+    "beginner": "Git is a distributed version control system that tracks changes in files and enables multiple developers to work on the same project. It stores snapshots of your project at different points in time, called commits.",
+    "advanced": "Git is a distributed version control system based on a directed acyclic graph (DAG) of commits, where each commit represents a complete snapshot of the project state. It uses content-addressable storage with SHA-1 hashing, supports non-linear development through branching and merging, and enables distributed workflows with multiple remote repositories."
+  },
+  "commands": [
+    {
+      "command": "git init",
+      "description": "Initialize a new Git repository",
+      "example": "git init my-project",
+      "flags": [
+        {
+          "flag": "--bare",
+          "description": "Create a bare repository (no working directory)",
+          "example": "--bare"
+        },
+        {
+          "flag": "--template",
+          "description": "Specify template directory",
+          "example": "--template=/path/to/template"
+        }
+      ]
+    },
+    {
+      "command": "git clone",
+      "description": "Clone a repository from remote URL",
+      "example": "git clone https://github.com/user/repo.git",
+      "flags": [
+        {
+          "flag": "--depth",
+          "description": "Create shallow clone with limited history",
+          "example": "--depth 1"
+        },
+        {
+          "flag": "--branch",
+          "description": "Clone specific branch",
+          "example": "--branch main"
+        },
+        {
+          "flag": "--recursive",
+          "description": "Clone with submodules",
+          "example": "--recursive"
+        }
+      ]
+    },
+    {
+      "command": "git add",
+      "description": "Add files to staging area",
+      "example": "git add .",
+      "flags": [
+        {
+          "flag": "-A",
+          "description": "Add all changes (including deletions)",
+          "example": "-A"
+        },
+        {
+          "flag": "-u",
+          "description": "Add only tracked files",
+          "example": "-u"
+        },
+        {
+          "flag": "-p",
+          "description": "Interactive staging (patch mode)",
+          "example": "-p"
+        }
+      ]
+    },
+    {
+      "command": "git commit",
+      "description": "Create a new commit with staged changes",
+      "example": "git commit -m \"Add new feature\"",
+      "flags": [
+        {
+          "flag": "-m",
+          "description": "Commit message inline",
+          "example": "-m \"Fix bug in user authentication\""
+        },
+        {
+          "flag": "-a",
+          "description": "Stage and commit all tracked files",
+          "example": "-am \"Update documentation\""
+        },
+        {
+          "flag": "--amend",
+          "description": "Modify the last commit",
+          "example": "--amend"
+        }
+      ]
+    },
+    {
+      "command": "git status",
+      "description": "Show working tree status",
+      "example": "git status",
+      "flags": [
+        {
+          "flag": "-s",
+          "description": "Short status format",
+          "example": "-s"
+        },
+        {
+          "flag": "--porcelain",
+          "description": "Machine-readable output",
+          "example": "--porcelain"
+        }
+      ]
+    },
+    {
+      "command": "git log",
+      "description": "Show commit history",
+      "example": "git log --oneline",
+      "flags": [
+        {
+          "flag": "--oneline",
+          "description": "Compact one-line format",
+          "example": "--oneline"
+        },
+        {
+          "flag": "--graph",
+          "description": "ASCII graph of branch structure",
+          "example": "--graph"
+        },
+        {
+          "flag": "--since",
+          "description": "Show commits since date",
+          "example": "--since=\"2 weeks ago\""
+        }
+      ]
+    },
+    {
+      "command": "git diff",
+      "description": "Show changes between commits, working tree, etc",
+      "example": "git diff HEAD~1",
+      "flags": [
+        {
+          "flag": "--staged",
+          "description": "Show staged changes",
+          "example": "--staged"
+        },
+        {
+          "flag": "--name-only",
+          "description": "Show only file names",
+          "example": "--name-only"
+        },
+        {
+          "flag": "--stat",
+          "description": "Show file statistics",
+          "example": "--stat"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "Complete Git Project Setup and Basic Workflow",
+      "description": "End-to-end example of setting up a Git repository and performing basic operations",
+      "code": "# Initialize a new Git repository\nmkdir my-awesome-project\ncd my-awesome-project\ngit init\n\n# Configure Git (first time setup)\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\"\ngit config --global init.defaultBranch main\n\n# Optional: Configure Git editor and other preferences\ngit config --global core.editor \"code --wait\"  # VS Code\ngit config --global core.autocrlf true          # Windows\ngit config --global pull.rebase false           # Merge strategy\n\n# Create initial project structure\ntouch README.md\necho \"# My Awesome Project\" > README.md\necho \"A sample project to demonstrate Git fundamentals\" >> README.md\n\nmkdir src\necho \"console.log('Hello, Git!');\" > src/app.js\n\nmkdir docs\necho \"# Documentation\" > docs/guide.md\n\n# Create .gitignore file\ncat > .gitignore << EOF\n# Dependencies\nnode_modules/\nnpm-debug.log*\n\n# Environment files\n.env\n.env.local\n\n# IDE files\n.vscode/\n.idea/\n*.swp\n*.swo\n\n# OS files\n.DS_Store\nThumbs.db\n\n# Build outputs\ndist/\nbuild/\n*.log\nEOF\n\n# Check current status\ngit status\n# Output shows:\n# On branch main\n# No commits yet\n# Untracked files:\n#   .gitignore\n#   README.md\n#   docs/\n#   src/\n\n# Stage files for commit\ngit add README.md\ngit add src/app.js\ngit add docs/guide.md\ngit add .gitignore\n\n# Alternative: Stage all files at once\n# git add .\n\n# Check status after staging\ngit status\n# Output shows:\n# On branch main\n# No commits yet\n# Changes to be committed:\n#   new file:   .gitignore\n#   new file:   README.md\n#   new file:   docs/guide.md\n#   new file:   src/app.js\n\n# Create first commit\ngit commit -m \"Initial commit: Add project structure and basic files\n\n- Add README with project description\n- Add basic JavaScript application\n- Add documentation structure\n- Add comprehensive .gitignore\"\n\n# View commit history\ngit log --oneline\n# Output: a1b2c3d (HEAD -> main) Initial commit: Add project structure...\n\n# Make some changes to demonstrate workflow\necho \"\\n## Getting Started\" >> README.md\necho \"\\n1. Clone the repository\" >> README.md\necho \"2. Install dependencies\" >> README.md\necho \"3. Run the application\" >> README.md\n\n# Add more functionality to app.js\ncat >> src/app.js << EOF\n\nfunction greetUser(name) {\n    return \\`Hello, \\${name}! Welcome to Git.\\`;\n}\n\nfunction main() {\n    const userName = process.argv[2] || 'Developer';\n    console.log(greetUser(userName));\n}\n\nif (require.main === module) {\n    main();\n}\n\nmodule.exports = { greetUser };\nEOF\n\n# Create package.json\ncat > package.json << EOF\n{\n  \"name\": \"my-awesome-project\",\n  \"version\": \"1.0.0\",\n  \"description\": \"A sample project to demonstrate Git fundamentals\",\n  \"main\": \"src/app.js\",\n  \"scripts\": {\n    \"start\": \"node src/app.js\",\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"keywords\": [\"git\", \"demo\", \"learning\"],\n  \"author\": \"Your Name\",\n  \"license\": \"MIT\"\n}\nEOF\n\n# Check what changed\ngit status\n# Output shows:\n# On branch main\n# Changes not staged for commit:\n#   modified:   README.md\n#   modified:   src/app.js\n# Untracked files:\n#   package.json\n\n# View detailed changes\ngit diff\n# Shows line-by-line differences for tracked files\n\ngit diff README.md\n# Shows specific changes to README.md\n\n# Stage and commit changes\ngit add README.md src/app.js\ngit commit -m \"Enhance application functionality\n\n- Add getting started section to README\n- Implement greetUser function with parameter support\n- Add module export for testing\"\n\n# Add package.json in separate commit\ngit add package.json\ngit commit -m \"Add package.json with project metadata and scripts\"\n\n# View commit history with more details\ngit log --oneline --graph --decorate\n# Output:\n# * c4d5e6f (HEAD -> main) Add package.json with project metadata...\n# * b2c3d4e Enhance application functionality\n# * a1b2c3d Initial commit: Add project structure...\n\n# View commit with specific details\ngit show HEAD  # Show latest commit\ngit show HEAD~1  # Show previous commit\n\n# Check file history\ngit log --oneline src/app.js\n# Shows commits that modified this file\n\n# Create and work with a development branch\ngit branch feature/user-input\ngit checkout feature/user-input\n# Or in one command: git checkout -b feature/user-input\n\n# Add interactive user input feature\ncat > src/input.js << EOF\nconst readline = require('readline');\n\nfunction getUserInput(question) {\n    const rl = readline.createInterface({\n        input: process.stdin,\n        output: process.stdout\n    });\n    \n    return new Promise((resolve) => {\n        rl.question(question, (answer) => {\n            rl.close();\n            resolve(answer);\n        });\n    });\n}\n\nmodule.exports = { getUserInput };\nEOF\n\n# Update app.js to use interactive input\ncat > src/app.js << EOF\nconst { getUserInput } = require('./input');\n\nfunction greetUser(name) {\n    return \\`Hello, \\${name}! Welcome to Git.\\`;\n}\n\nasync function main() {\n    try {\n        const userName = await getUserInput('What is your name? ');\n        console.log(greetUser(userName));\n    } catch (error) {\n        console.error('Error getting user input:', error);\n        // Fallback to command line argument\n        const fallbackName = process.argv[2] || 'Developer';\n        console.log(greetUser(fallbackName));\n    }\n}\n\nif (require.main === module) {\n    main();\n}\n\nmodule.exports = { greetUser };\nEOF\n\n# Commit changes on feature branch\ngit add .\ngit commit -m \"Add interactive user input functionality\n\n- Create input.js module for readline interface\n- Update app.js to use interactive input\n- Add error handling with fallback to CLI args\"\n\n# Switch back to main branch\ngit checkout main\n\n# View branch structure\ngit log --oneline --graph --all\n# Shows both main and feature branch commits\n\n# Merge feature branch\ngit merge feature/user-input\n# Creates merge commit if there are divergent changes\n\n# Clean up: delete feature branch\ngit branch -d feature/user-input\n\n# Final commit history\ngit log --oneline --graph\n# Shows complete project history\n\n# Tag a release\ngit tag -a v1.0.0 -m \"Version 1.0.0: Initial release with interactive input\"\ngit tag  # List tags\n\n# Show repository summary\necho \"\\n=== Repository Summary ===\"\necho \"Current branch: $(git branch --show-current)\"\necho \"Total commits: $(git rev-list --count HEAD)\"\necho \"Latest commit: $(git log -1 --format='%h - %s (%ar)')\"\necho \"Repository size: $(du -sh .git)\"\necho \"Files tracked: $(git ls-files | wc -l)\"",
+      "language": "bash",
+      "scenario": "Complete Git workflow from repository initialization to feature development and release tagging"
+    },
+    {
+      "title": "Git Configuration and Aliases Setup",
+      "description": "Comprehensive Git configuration for productivity and consistency",
+      "code": "#!/bin/bash\n# Git Configuration Script for Development Team\n\n# Global Git Configuration\necho \"Setting up Git global configuration...\"\n\n# User Identity (required)\nread -p \"Enter your full name: \" user_name\nread -p \"Enter your email address: \" user_email\n\ngit config --global user.name \"$user_name\"\ngit config --global user.email \"$user_email\"\n\n# Core Settings\ngit config --global init.defaultBranch main\ngit config --global core.editor \"code --wait\"  # VS Code as editor\ngit config --global core.autocrlf true          # Windows line endings\ngit config --global core.filemode false         # Ignore file permission changes\ngit config --global core.precomposeunicode true # Unicode normalization\ngit config --global core.quotepath false        # Display non-ASCII file names\n\n# Pull/Push Behavior\ngit config --global pull.rebase false           # Use merge for pulls\ngit config --global push.default simple         # Push current branch only\ngit config --global push.followTags true        # Push tags with commits\n\n# Branch and Merge Settings\ngit config --global branch.autosetupmerge true\ngit config --global branch.autosetuprebase never\ngit config --global merge.tool vscode           # Use VS Code for merge conflicts\ngit config --global mergetool.vscode.cmd 'code --wait $MERGED'\n\n# Diff and Status Settings\ngit config --global diff.renames true           # Detect file renames\ngit config --global status.showUntrackedFiles all\ngit config --global color.ui auto               # Colorized output\n\n# Security Settings\ngit config --global transfer.fsckobjects true  # Verify objects\ngit config --global fetch.fsckobjects true\ngit config --global receive.fsckObjects true\n\n# Performance Settings\ngit config --global core.preloadindex true     # Speed up commands\ngit config --global core.fscache true          # Windows file system cache\ngit config --global gc.auto 256                # Garbage collection threshold\n\n# Useful Aliases\necho \"Setting up Git aliases...\"\n\n# Status and Log Aliases\ngit config --global alias.st status\ngit config --global alias.s \"status --short\"\ngit config --global alias.l \"log --oneline\"\ngit config --global alias.lg \"log --oneline --graph --decorate --all\"\ngit config --global alias.ll \"log --graph --pretty=format:'%C(yellow)%h%C(reset) - %C(blue)%an%C(reset), %C(green)%ar%C(reset) : %s %C(yellow)%d%C(reset)'\"\n\n# Commit Aliases\ngit config --global alias.ci commit\ngit config --global alias.cm \"commit -m\"\ngit config --global alias.ca \"commit --amend\"\ngit config --global alias.can \"commit --amend --no-edit\"\n\n# Branch Aliases\ngit config --global alias.br branch\ngit config --global alias.co checkout\ngit config --global alias.cob \"checkout -b\"\ngit config --global alias.sw switch\ngit config --global alias.swc \"switch -c\"\n\n# Diff Aliases\ngit config --global alias.d diff\ngit config --global alias.ds \"diff --staged\"\ngit config --global alias.dc \"diff --cached\"\ngit config --global alias.dt \"diff --name-only\"\n\n# Advanced Aliases\ngit config --global alias.unstage \"reset HEAD --\"\ngit config --global alias.discard \"checkout --\"\ngit config --global alias.last \"log -1 HEAD\"\ngit config --global alias.visual \"!gitk\"\n\n# Stash Aliases\ngit config --global alias.sl \"stash list\"\ngit config --global alias.sp \"stash pop\"\ngit config --global alias.ss \"stash save\"\ngit config --global alias.sshow \"stash show -p\"\n\n# Remote Aliases\ngit config --global alias.rv \"remote -v\"\ngit config --global alias.ra \"remote add\"\ngit config --global alias.rr \"remote remove\"\n\n# Clean and Reset Aliases\ngit config --global alias.cleanup \"!git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d\"\ngit config --global alias.undo \"reset --soft HEAD~1\"\ngit config --global alias.hard-reset \"reset --hard HEAD\"\n\n# Search and Find Aliases\ngit config --global alias.find \"grep -n\"\ngit config --global alias.who \"blame\"\ngit config --global alias.contributors \"shortlog -sn\"\n\n# Advanced Workflow Aliases\ngit config --global alias.sync \"!git fetch origin && git rebase origin/main\"\ngit config --global alias.save \"!git add -A && git commit -m 'SAVEPOINT'\"\ngit config --global alias.wip \"!git add -A && git commit -m 'WIP: work in progress'\"\ngit config --global alias.wipe \"!git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard\"\n\n# Release and Tagging Aliases\ngit config --global alias.releases \"tag -l\"\ngit config --global alias.amend \"commit --amend --no-edit\"\ngit config --global alias.redo \"!git reset --soft HEAD~1 && git commit\"\n\n# Information Aliases\ngit config --global alias.summary \"!echo 'Repository Summary:' && echo '==================' && echo 'Current branch:' $(git branch --show-current) && echo 'Total commits:' $(git rev-list --count HEAD) && echo 'Contributors:' $(git shortlog -sn | wc -l) && echo 'Files tracked:' $(git ls-files | wc -l) && echo 'Repository size:' $(du -sh .git 2>/dev/null || echo 'N/A')\"\ngit config --global alias.recent \"!git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | tail -10\"\n\n# Complex Workflow Aliases\ngit config --global alias.feature \"!f() { git checkout -b feature/$1 && echo 'Created and switched to feature branch: feature/'$1; }; f\"\ngit config --global alias.hotfix \"!f() { git checkout -b hotfix/$1 && echo 'Created and switched to hotfix branch: hotfix/'$1; }; f\"\ngit config --global alias.finish \"!f() { git checkout main && git merge --no-ff $1 && git branch -d $1 && echo 'Merged and deleted branch: '$1; }; f\"\n\n# Repository Health Check\ngit config --global alias.health \"!echo 'Git Repository Health Check:' && echo '=============================' && echo 'Checking for issues...' && git fsck --no-dangling && echo 'Repository integrity: OK' && echo 'Optimizing repository...' && git gc --prune=now && echo 'Repository optimized.'\"\n\n# Global .gitignore Setup\necho \"Setting up global .gitignore...\"\n\n# Create global gitignore file\ncat > ~/.gitignore_global << 'EOF'\n# Operating System Files\n.DS_Store\n.DS_Store?\n._*\n.Spotlight-V100\n.Trashes\nehthumbs.db\nThumbs.db\nDesktop.ini\n\n# IDE and Editor Files\n.vscode/\n.idea/\n*.swp\n*.swo\n*~\n.project\n.settings/\n.classpath\n\n# Environment Files\n.env\n.env.local\n.env.development.local\n.env.test.local\n.env.production.local\n\n# Dependencies\nnode_modules/\nvendor/\n.pnp\n.pnp.js\n\n# Logs\n*.log\nnpm-debug.log*\nyarn-debug.log*\nyarn-error.log*\nlerna-debug.log*\n\n# Temporary Files\n*.tmp\n*.temp\n.cache/\n.sass-cache/\n\n# Build Outputs\ndist/\nbuild/\nout/\n.next/\n.nuxt/\ntarget/\n\n# Testing\ncoverage/\n.nyc_output\n.jest/\n\n# Backup Files\n*.bak\n*.backup\n*.orig\nEOF\n\n# Set global gitignore\ngit config --global core.excludesfile ~/.gitignore_global\n\n# SSH Key Setup (optional)\necho \"\\nWould you like to generate an SSH key for Git authentication? (y/n)\"\nread -r generate_ssh\n\nif [[ $generate_ssh =~ ^[Yy]$ ]]; then\n    echo \"Generating SSH key...\"\n    ssh-keygen -t ed25519 -C \"$user_email\" -f ~/.ssh/id_ed25519\n    \n    # Start ssh-agent and add key\n    eval \"$(ssh-agent -s)\"\n    ssh-add ~/.ssh/id_ed25519\n    \n    echo \"\\nSSH key generated. Add this public key to your Git hosting service:\"\n    echo \"========================================\"\n    cat ~/.ssh/id_ed25519.pub\n    echo \"========================================\"\n    echo \"\\nFor GitHub: Settings → SSH and GPG keys → New SSH key\"\n    echo \"For GitLab: Preferences → SSH Keys\"\n    echo \"For Bitbucket: Personal settings → SSH keys\"\nfi\n\n# Display configuration summary\necho \"\\n=== Git Configuration Summary ===\"\necho \"User: $(git config --global user.name) <$(git config --global user.email)>\"\necho \"Default branch: $(git config --global init.defaultBranch)\"\necho \"Editor: $(git config --global core.editor)\"\necho \"Global gitignore: $(git config --global core.excludesfile)\"\necho \"\\nAvailable aliases:\"\ngit config --global --get-regexp alias | sed 's/alias\\.//' | sort\n\necho \"\\n✅ Git configuration completed successfully!\"\necho \"\\nQuick start commands:\"\necho \"  git clone <url>     # Clone a repository\"\necho \"  git st              # Status (short)\"\necho \"  git lg              # Pretty log graph\"\necho \"  git cob <branch>    # Create and checkout branch\"\necho \"  git cm 'message'    # Commit with message\"\necho \"  git summary         # Repository summary\"\necho \"  git health          # Repository health check\"",
+      "language": "bash",
+      "scenario": "Professional Git configuration setup with productivity aliases and global settings"
+    }
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Permission denied when pushing to remote repository",
+      "solution": "Check SSH key setup or use personal access token for HTTPS authentication",
+      "commands": ["ssh-add -l", "git remote -v", "git config --list | grep user"],
+      "details": "Ensure SSH key is added to ssh-agent and uploaded to Git hosting service, or configure personal access token"
+    },
+    {
+      "problem": "Merge conflicts during git pull or merge",
+      "solution": "Use git status to identify conflicted files, edit conflicts manually, then git add and git commit",
+      "commands": ["git status", "git diff", "git mergetool"],
+      "details": "Look for conflict markers (<<<<<<<, =======, >>>>>>>) in files and resolve manually"
+    },
+    {
+      "problem": "Accidentally committed sensitive information",
+      "solution": "Use git reset or git revert for recent commits, or git filter-branch for history rewriting",
+      "commands": ["git reset --soft HEAD~1", "git revert HEAD", "git filter-branch"],
+      "details": "For pushed commits, coordinate with team before rewriting history"
+    },
+    {
+      "problem": "Detached HEAD state after checkout",
+      "solution": "Create a new branch from current position or checkout an existing branch",
+      "commands": ["git checkout -b new-branch", "git checkout main"],
+      "details": "Detached HEAD means you're not on a branch; create branch to save work"
+    }
+  ],
+  "tags": ["version-control", "git", "repositories", "commits", "basics", "workflow"]
+}

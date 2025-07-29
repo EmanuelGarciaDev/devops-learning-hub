@@ -1,0 +1,9 @@
+{
+  "id": "github-actions",
+  "name": "GitHub Actions",
+  "description": "Modern CI/CD platform for automating software workflows directly from GitHub repositories",
+  "category": "CI/CD",
+  "icon": "⚡",
+  "color": "purple",
+  "concepts": ["actions-fundamentals", "workflows", "advanced-workflows", "marketplace"]
+}

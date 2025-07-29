@@ -1,0 +1,9 @@
+{
+  "id": "docker",
+  "name": "Docker",
+  "description": "Platform for developing, shipping, and running applications using containerization",
+  "category": "Containerization",
+  "icon": "🐳",
+  "color": "blue",
+  "concepts": ["docker-basics", "docker-images", "docker-containers"]
+}

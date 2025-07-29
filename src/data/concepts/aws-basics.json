@@ -1,0 +1,51 @@
+{
+  "id": "aws-basics",
+  "toolId": "aws",
+  "name": "AWS Fundamentals",
+  "description": "Core concepts and services of Amazon Web Services",
+  "difficulty": "beginner",
+  "definitions": {
+    "beginner": "AWS is Amazon's cloud computing platform that provides web services like virtual servers, storage, and databases over the internet.",
+    "advanced": "AWS is a comprehensive cloud computing platform offering Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) with global data centers, extensive service portfolio, and pay-as-you-use pricing model."
+  },
+  "commands": [
+    {
+      "command": "aws --version",
+      "description": "Check AWS CLI version",
+      "example": "aws --version"
+    },
+    {
+      "command": "aws configure",
+      "description": "Configure AWS credentials and default settings",
+      "example": "aws configure"
+    },
+    {
+      "command": "aws sts get-caller-identity",
+      "description": "Get current AWS account and user information",
+      "example": "aws sts get-caller-identity"
+    },
+    {
+      "command": "aws ec2 describe-regions",
+      "description": "List all available AWS regions",
+      "example": "aws ec2 describe-regions --output table"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Setting up AWS CLI",
+      "description": "Install and configure AWS CLI for command-line access",
+      "code": "# Install AWS CLI\npip install awscli\n\n# Configure credentials\naws configure\n# AWS Access Key ID: YOUR_ACCESS_KEY\n# AWS Secret Access Key: YOUR_SECRET_KEY\n# Default region name: us-east-1\n# Default output format: json",
+      "language": "bash",
+      "scenario": "Initial setup for AWS command-line interface"
+    },
+    {
+      "title": "Check AWS Account Info",
+      "description": "Verify your AWS configuration and account details",
+      "code": "aws sts get-caller-identity",
+      "language": "bash",
+      "output": "{\n    \"UserId\": \"AIDACKCEVSQ6C2EXAMPLE\",\n    \"Account\": \"123456789012\",\n    \"Arn\": \"arn:aws:iam::123456789012:user/DevAdmin\"\n}",
+      "scenario": "Confirming AWS CLI setup and current user identity"
+    }
+  ],
+  "tags": ["cloud", "aws", "basics", "cli", "setup"]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "ansible-basics",
+  "toolId": "ansible",
+  "name": "Ansible Fundamentals",
+  "description": "Core concepts of agentless automation and configuration management",
+  "difficulty": "beginner",
+  "definitions": {
+    "beginner": "Ansible is a tool that lets you automatically configure and manage multiple servers by writing simple instructions, like having a remote control for all your computers at once.",
+    "advanced": "Ansible is an agentless automation platform using SSH and Python for configuration management, application deployment, and infrastructure orchestration through declarative YAML playbooks and an extensive module library."
+  },
+  "commands": [
+    {
+      "command": "ansible --version",
+      "description": "Check Ansible version and configuration",
+      "example": "ansible --version"
+    },
+    {
+      "command": "ansible all -m ping",
+      "description": "Test connectivity to all hosts",
+      "example": "ansible all -m ping -i inventory.ini"
+    },
+    {
+      "command": "ansible-playbook",
+      "description": "Run an Ansible playbook",
+      "example": "ansible-playbook -i inventory.ini playbook.yml"
+    },
+    {
+      "command": "ansible-inventory",
+      "description": "Display inventory information",
+      "example": "ansible-inventory --list -i inventory.ini"
+    },
+    {
+      "command": "ansible-galaxy",
+      "description": "Manage Ansible roles and collections",
+      "example": "ansible-galaxy install geerlingguy.nginx"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Basic Inventory Setup",
+      "description": "Create inventory file for managing multiple servers",
+      "code": "# inventory.ini\n[webservers]\nweb1.example.com ansible_host=192.168.1.10\nweb2.example.com ansible_host=192.168.1.11\n\n[databases]\ndb1.example.com ansible_host=192.168.1.20\n\n[all:vars]\nansible_user=ubuntu\nansible_ssh_private_key_file=~/.ssh/id_rsa\n\n# Test connectivity\nansible all -m ping -i inventory.ini\n\n# Run command on all webservers\nansible webservers -a \"uptime\" -i inventory.ini",
+      "language": "ini",
+      "scenario": "Setting up server inventory for automation"
+    },
+    {
+      "title": "First Ansible Playbook",
+      "description": "Simple playbook to install and configure nginx",
+      "code": "# nginx-setup.yml\n---\n- name: Install and configure Nginx\n  hosts: webservers\n  become: yes\n  \n  tasks:\n    - name: Update package cache\n      apt:\n        update_cache: yes\n      when: ansible_os_family == \"Debian\"\n    \n    - name: Install Nginx\n      apt:\n        name: nginx\n        state: present\n      when: ansible_os_family == \"Debian\"\n    \n    - name: Start and enable Nginx\n      systemd:\n        name: nginx\n        state: started\n        enabled: yes\n    \n    - name: Create custom index page\n      copy:\n        content: |\n          <html>\n            <body>\n              <h1>Welcome to {{ ansible_hostname }}</h1>\n              <p>Configured by Ansible</p>\n            </body>\n          </html>\n        dest: /var/www/html/index.html\n        mode: '0644'\n      notify: restart nginx\n  \n  handlers:\n    - name: restart nginx\n      systemd:\n        name: nginx\n        state: restarted\n\n# Run the playbook\n# ansible-playbook -i inventory.ini nginx-setup.yml",
+      "language": "yaml",
+      "scenario": "Automating web server setup and configuration"
+    },
+    {
+      "title": "Ad-hoc Commands",
+      "description": "Quick one-liner commands for common tasks",
+      "code": "# Check disk space on all servers\nansible all -a \"df -h\" -i inventory.ini\n\n# Install package on specific group\nansible webservers -m apt -a \"name=htop state=present\" -i inventory.ini --become\n\n# Copy file to multiple servers\nansible all -m copy -a \"src=config.txt dest=/tmp/config.txt\" -i inventory.ini\n\n# Restart service on database servers\nansible databases -m systemd -a \"name=mysql state=restarted\" -i inventory.ini --become\n\n# Check service status\nansible webservers -m systemd -a \"name=nginx\" -i inventory.ini --become\n\n# Run shell command with variables\nansible all -m shell -a \"echo 'Server: {{ ansible_hostname }}, IP: {{ ansible_default_ipv4.address }}'\" -i inventory.ini",
+      "language": "bash",
+      "scenario": "Quick server management tasks without playbooks"
+    }
+  ],
+  "tags": ["ansible", "automation", "configuration", "infrastructure", "agentless"]
+}

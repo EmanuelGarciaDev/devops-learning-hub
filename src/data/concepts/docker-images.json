@@ -1,0 +1,76 @@
+{
+  "id": "docker-images",
+  "toolId": "docker",
+  "name": "Docker Images",
+  "description": "Working with Docker images - building, managing, and sharing",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "Docker images are like templates or blueprints used to create containers. They contain everything needed to run an application.",
+    "advanced": "Docker images are read-only templates composed of layered filesystems that serve as the basis for creating containers. Images are built from Dockerfiles and can be shared via registries."
+  },
+  "commands": [
+    {
+      "command": "docker images",
+      "description": "List all local images",
+      "example": "docker images",
+      "flags": [
+        {
+          "flag": "-a",
+          "description": "Show all images (including intermediate layers)"
+        },
+        {
+          "flag": "-q",
+          "description": "Show only image IDs"
+        }
+      ]
+    },
+    {
+      "command": "docker pull",
+      "description": "Download an image from a registry",
+      "example": "docker pull nginx:latest",
+      "flags": [
+        {
+          "flag": "-a",
+          "description": "Download all tagged images in the repository"
+        }
+      ]
+    },
+    {
+      "command": "docker build",
+      "description": "Build an image from a Dockerfile",
+      "example": "docker build -t myapp:v1.0 .",
+      "flags": [
+        {
+          "flag": "-t",
+          "description": "Name and optionally tag the image"
+        },
+        {
+          "flag": "-f",
+          "description": "Specify the Dockerfile path"
+        }
+      ]
+    },
+    {
+      "command": "docker rmi",
+      "description": "Remove one or more images",
+      "example": "docker rmi myapp:v1.0"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Building a Simple Web App",
+      "description": "Create a Dockerfile for a simple Node.js web application",
+      "code": "FROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"npm\", \"start\"]",
+      "language": "dockerfile",
+      "scenario": "Building a production-ready Node.js application image"
+    },
+    {
+      "title": "Multi-stage Build",
+      "description": "Use multi-stage builds to create smaller production images",
+      "code": "# Build stage\nFROM node:18-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\n\n# Production stage\nFROM node:18-alpine\nWORKDIR /app\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY . .\nEXPOSE 3000\nCMD [\"npm\", \"start\"]",
+      "language": "dockerfile",
+      "scenario": "Optimizing image size with multi-stage builds"
+    }
+  ],
+  "tags": ["images", "dockerfile", "build", "registry", "layers"]
+}

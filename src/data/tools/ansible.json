@@ -1,0 +1,9 @@
+{
+  "id": "ansible",
+  "name": "Ansible",
+  "description": "Agentless automation platform for configuration management, application deployment, and orchestration",
+  "category": "Configuration Management",
+  "icon": "🎭",
+  "color": "red",
+  "concepts": ["ansible-basics", "playbooks", "inventory-management", "roles-collections"]
+}

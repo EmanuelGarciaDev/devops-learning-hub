@@ -1,0 +1,9 @@
+{
+  "id": "aws",
+  "name": "AWS",
+  "description": "Amazon Web Services - comprehensive cloud computing platform with global infrastructure",
+  "category": "Cloud Platform",
+  "icon": "☁️",
+  "color": "orange",
+  "concepts": ["aws-basics", "ec2-instances", "s3-storage", "iam-security"]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "prometheus-basics",
+  "toolId": "prometheus",
+  "name": "Prometheus Fundamentals",
+  "description": "Core concepts of metrics collection and monitoring with Prometheus",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "Prometheus is a monitoring system that collects and stores metrics from your applications and infrastructure, helping you understand how everything is performing and alerting you when things go wrong.",
+    "advanced": "Prometheus is a time-series database and monitoring system with a dimensional data model, PromQL query language, pull-based metric collection, and integration with service discovery for dynamic environments and microservices architectures."
+  },
+  "commands": [
+    {
+      "command": "prometheus --version",
+      "description": "Check Prometheus version",
+      "example": "prometheus --version"
+    },
+    {
+      "command": "prometheus --config.file",
+      "description": "Start Prometheus with custom config",
+      "example": "prometheus --config.file=prometheus.yml --storage.tsdb.path=./data"
+    },
+    {
+      "command": "promtool",
+      "description": "Prometheus configuration tool",
+      "example": "promtool check config prometheus.yml"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Basic Prometheus Setup",
+      "description": "Configure Prometheus to monitor local services",
+      "code": "# prometheus.yml\nglobal:\n  scrape_interval: 15s\n  evaluation_interval: 15s\n\nrule_files:\n  # - \"first_rules.yml\"\n  # - \"second_rules.yml\"\n\nscrape_configs:\n  - job_name: 'prometheus'\n    static_configs:\n      - targets: ['localhost:9090']\n  \n  - job_name: 'node-exporter'\n    static_configs:\n      - targets: ['localhost:9100']\n  \n  - job_name: 'my-app'\n    static_configs:\n      - targets: ['localhost:8080']\n    metrics_path: '/metrics'\n    scrape_interval: 10s\n\n# Start Prometheus\n# prometheus --config.file=prometheus.yml --storage.tsdb.path=./data\n# Access UI at http://localhost:9090",
+      "language": "yaml",
+      "scenario": "Setting up Prometheus monitoring for local development"
+    },
+    {
+      "title": "Docker Compose Monitoring Stack",
+      "description": "Complete monitoring setup with Prometheus, Grafana, and exporters",
+      "code": "# docker-compose.yml\nversion: '3.8'\n\nservices:\n  prometheus:\n    image: prom/prometheus:latest\n    container_name: prometheus\n    command:\n      - '--config.file=/etc/prometheus/prometheus.yml'\n      - '--storage.tsdb.path=/prometheus'\n      - '--web.console.libraries=/etc/prometheus/console_libraries'\n      - '--web.console.templates=/etc/prometheus/consoles'\n      - '--storage.tsdb.retention.time=200h'\n      - '--web.enable-lifecycle'\n    restart: unless-stopped\n    ports:\n      - \"9090:9090\"\n    volumes:\n      - ./prometheus.yml:/etc/prometheus/prometheus.yml\n      - prometheus_data:/prometheus\n\n  grafana:\n    image: grafana/grafana:latest\n    container_name: grafana\n    restart: unless-stopped\n    ports:\n      - \"3000:3000\"\n    environment:\n      - GF_SECURITY_ADMIN_PASSWORD=admin\n    volumes:\n      - grafana_data:/var/lib/grafana\n\n  node-exporter:\n    image: prom/node-exporter:latest\n    container_name: node-exporter\n    restart: unless-stopped\n    ports:\n      - \"9100:9100\"\n    command:\n      - '--path.procfs=/host/proc'\n      - '--path.rootfs=/rootfs'\n      - '--path.sysfs=/host/sys'\n      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'\n    volumes:\n      - /proc:/host/proc:ro\n      - /sys:/host/sys:ro\n      - /:/rootfs:ro\n\nvolumes:\n  prometheus_data:\n  grafana_data:\n\n# Start the stack\n# docker-compose up -d\n# Prometheus: http://localhost:9090\n# Grafana: http://localhost:3000 (admin/admin)",
+      "language": "yaml",
+      "scenario": "Production-ready monitoring stack with Docker Compose"
+    },
+    {
+      "title": "Basic PromQL Queries",
+      "description": "Essential Prometheus queries for monitoring",
+      "code": "# CPU Usage Queries\n# Current CPU usage percentage\n100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)\n\n# CPU usage by core\nrate(node_cpu_seconds_total[5m])\n\n# Memory Queries\n# Memory usage percentage\n(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100\n\n# Available memory in GB\nnode_memory_MemAvailable_bytes / 1024 / 1024 / 1024\n\n# Disk Queries\n# Disk usage percentage\n(1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100\n\n# Network Queries\n# Network traffic rate\nrate(node_network_receive_bytes_total[5m])\nrate(node_network_transmit_bytes_total[5m])\n\n# Application Metrics\n# HTTP request rate\nrate(http_requests_total[5m])\n\n# HTTP error rate\nrate(http_requests_total{status=~\"5..\"}[5m]) / rate(http_requests_total[5m])\n\n# Response time percentiles\nhistogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+      "language": "promql",
+      "scenario": "Common monitoring queries for system and application metrics"
+    }
+  ],
+  "tags": ["prometheus", "monitoring", "metrics", "observability", "alerting"]
+}

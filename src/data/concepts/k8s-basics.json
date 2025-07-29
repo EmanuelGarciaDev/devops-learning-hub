@@ -1,0 +1,55 @@
+{
+  "id": "k8s-basics",
+  "toolId": "kubernetes",
+  "name": "Kubernetes Fundamentals",
+  "description": "Core concepts and architecture of Kubernetes container orchestration",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "Kubernetes is a system that automatically manages and runs your containerized applications across multiple computers, handling scaling, updates, and failures.",
+    "advanced": "Kubernetes is an open-source container orchestration platform that automates deployment, scaling, and operations of application containers across clusters of hosts, providing container-centric management environment with declarative configuration and automation."
+  },
+  "commands": [
+    {
+      "command": "kubectl version",
+      "description": "Check Kubernetes client and server versions",
+      "example": "kubectl version --short"
+    },
+    {
+      "command": "kubectl cluster-info",
+      "description": "Display cluster information",
+      "example": "kubectl cluster-info"
+    },
+    {
+      "command": "kubectl get nodes",
+      "description": "List all nodes in the cluster",
+      "example": "kubectl get nodes -o wide"
+    },
+    {
+      "command": "kubectl get namespaces",
+      "description": "List all namespaces",
+      "example": "kubectl get namespaces"
+    },
+    {
+      "command": "kubectl config current-context",
+      "description": "Show current cluster context",
+      "example": "kubectl config current-context"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Cluster Health Check",
+      "description": "Verify Kubernetes cluster is running properly",
+      "code": "# Check cluster info\nkubectl cluster-info\n\n# List nodes\nkubectl get nodes\n\n# Check system pods\nkubectl get pods -n kube-system",
+      "language": "bash",
+      "scenario": "Initial cluster validation and health check"
+    },
+    {
+      "title": "First Application Deployment",
+      "description": "Deploy a simple nginx application",
+      "code": "# Create deployment\nkubectl create deployment nginx --image=nginx:latest\n\n# Check deployment status\nkubectl get deployments\n\n# Check pods\nkubectl get pods\n\n# Expose deployment\nkubectl expose deployment nginx --port=80 --type=NodePort",
+      "language": "bash",
+      "scenario": "Deploying your first application to Kubernetes"
+    }
+  ],
+  "tags": ["kubernetes", "k8s", "orchestration", "containers", "cluster"]
+}

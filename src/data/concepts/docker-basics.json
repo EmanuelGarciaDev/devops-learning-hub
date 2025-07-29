@@ -1,0 +1,46 @@
+{
+  "id": "docker-basics",
+  "toolId": "docker",
+  "name": "Docker Basics",
+  "description": "Understanding Docker fundamentals and core concepts",
+  "difficulty": "beginner",
+  "definitions": {
+    "beginner": "Docker is a tool that packages applications and their dependencies into lightweight, portable containers that can run anywhere.",
+    "advanced": "Docker is a containerization platform that uses OS-level virtualization to package applications and dependencies into isolated, portable containers with their own filesystem, networking, and process space."
+  },
+  "commands": [
+    {
+      "command": "docker --version",
+      "description": "Check Docker version",
+      "example": "docker --version"
+    },
+    {
+      "command": "docker info",
+      "description": "Display system-wide Docker information",
+      "example": "docker info"
+    },
+    {
+      "command": "docker help",
+      "description": "Get help for Docker commands",
+      "example": "docker help run"
+    }
+  ],
+  "examples": [
+    {
+      "title": "First Docker Container",
+      "description": "Run your first container using the hello-world image",
+      "code": "docker run hello-world",
+      "language": "bash",
+      "output": "Hello from Docker!\nThis message shows that your installation appears to be working correctly.",
+      "scenario": "Testing Docker installation and running a simple container"
+    },
+    {
+      "title": "Interactive Container",
+      "description": "Run an interactive Ubuntu container",
+      "code": "docker run -it ubuntu:latest /bin/bash",
+      "language": "bash",
+      "scenario": "Starting an interactive shell session inside a Ubuntu container"
+    }
+  ],
+  "tags": ["containers", "basics", "installation", "getting-started"]
+}

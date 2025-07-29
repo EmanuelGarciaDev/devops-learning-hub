@@ -1,0 +1,9 @@
+{
+  "id": "terraform",
+  "name": "Terraform",
+  "description": "Infrastructure as Code tool for building, changing, and versioning infrastructure safely and efficiently",
+  "category": "Infrastructure as Code",
+  "icon": "🏗️",
+  "color": "purple",
+  "concepts": ["terraform-basics", "providers-resources", "state-management", "modules-workspaces"]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "ec2-instances",
+  "toolId": "aws",
+  "name": "EC2 Instances",
+  "description": "Virtual servers in the AWS cloud for compute workloads",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "EC2 instances are virtual computers you can rent from AWS to run your applications, similar to having your own server but in the cloud.",
+    "advanced": "Amazon EC2 (Elastic Compute Cloud) provides resizable compute capacity through virtual machine instances with various instance types optimized for different use cases, supporting multiple operating systems and offering features like auto-scaling, load balancing, and spot pricing."
+  },
+  "commands": [
+    {
+      "command": "aws ec2 describe-instances",
+      "description": "List all EC2 instances in your account",
+      "example": "aws ec2 describe-instances --output table"
+    },
+    {
+      "command": "aws ec2 run-instances",
+      "description": "Launch a new EC2 instance",
+      "example": "aws ec2 run-instances --image-id ami-0abcdef1234567890 --count 1 --instance-type t2.micro --key-name MyKeyPair",
+      "flags": [
+        {
+          "flag": "--image-id",
+          "description": "AMI ID to launch the instance from",
+          "example": "ami-0abcdef1234567890"
+        },
+        {
+          "flag": "--instance-type",
+          "description": "Type of instance to launch",
+          "example": "t2.micro"
+        },
+        {
+          "flag": "--key-name",
+          "description": "Key pair name for SSH access",
+          "example": "MyKeyPair"
+        },
+        {
+          "flag": "--security-group-ids",
+          "description": "Security group IDs to assign",
+          "example": "sg-12345678"
+        }
+      ]
+    },
+    {
+      "command": "aws ec2 start-instances",
+      "description": "Start stopped EC2 instances",
+      "example": "aws ec2 start-instances --instance-ids i-1234567890abcdef0"
+    },
+    {
+      "command": "aws ec2 stop-instances",
+      "description": "Stop running EC2 instances",
+      "example": "aws ec2 stop-instances --instance-ids i-1234567890abcdef0"
+    },
+    {
+      "command": "aws ec2 terminate-instances",
+      "description": "Terminate EC2 instances",
+      "example": "aws ec2 terminate-instances --instance-ids i-1234567890abcdef0"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Launch a Basic Web Server",
+      "description": "Create a simple EC2 instance for hosting a web application",
+      "code": "# Launch an Ubuntu instance\naws ec2 run-instances \\\n  --image-id ami-0c02fb55956c7d316 \\\n  --count 1 \\\n  --instance-type t2.micro \\\n  --key-name my-key-pair \\\n  --security-group-ids sg-12345678 \\\n  --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=WebServer}]'",
+      "language": "bash",
+      "scenario": "Setting up a basic web server instance in AWS"
+    },
+    {
+      "title": "Connect to Instance via SSH",
+      "description": "Access your EC2 instance using SSH",
+      "code": "# Get instance public IP\naws ec2 describe-instances --instance-ids i-1234567890abcdef0 --query 'Reservations[0].Instances[0].PublicIpAddress'\n\n# Connect via SSH\nssh -i \"my-key-pair.pem\" ubuntu@54.123.45.67",
+      "language": "bash",
+      "scenario": "Connecting to a running EC2 instance for administration"
+    }
+  ],
+  "tags": ["ec2", "instances", "virtual-machines", "compute", "aws"]
+}

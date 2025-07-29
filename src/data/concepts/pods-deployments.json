@@ -1,0 +1,79 @@
+{
+  "id": "pods-deployments",
+  "toolId": "kubernetes",
+  "name": "Pods & Deployments",
+  "description": "Understanding Kubernetes pods and deployment management",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "Pods are the smallest units in Kubernetes that contain one or more containers, while Deployments manage multiple pods and handle updates and scaling.",
+    "advanced": "Pods are the atomic unit of deployment in Kubernetes, encapsulating one or more containers with shared storage and network. Deployments provide declarative updates for pods and ReplicaSets, managing rolling updates, rollbacks, and scaling operations."
+  },
+  "commands": [
+    {
+      "command": "kubectl get pods",
+      "description": "List all pods in current namespace",
+      "example": "kubectl get pods -o wide",
+      "flags": [
+        {
+          "flag": "-o wide",
+          "description": "Show additional information including node names",
+          "example": "kubectl get pods -o wide"
+        },
+        {
+          "flag": "--all-namespaces",
+          "description": "List pods from all namespaces",
+          "example": "kubectl get pods --all-namespaces"
+        }
+      ]
+    },
+    {
+      "command": "kubectl create deployment",
+      "description": "Create a new deployment",
+      "example": "kubectl create deployment nginx --image=nginx:1.20"
+    },
+    {
+      "command": "kubectl scale deployment",
+      "description": "Scale a deployment up or down",
+      "example": "kubectl scale deployment nginx --replicas=3"
+    },
+    {
+      "command": "kubectl describe pod",
+      "description": "Show detailed information about a pod",
+      "example": "kubectl describe pod nginx-pod"
+    },
+    {
+      "command": "kubectl logs",
+      "description": "View pod logs",
+      "example": "kubectl logs nginx-pod -f",
+      "flags": [
+        {
+          "flag": "-f",
+          "description": "Follow log output in real-time",
+          "example": "kubectl logs nginx-pod -f"
+        },
+        {
+          "flag": "--previous",
+          "description": "Show logs from previous container instance",
+          "example": "kubectl logs nginx-pod --previous"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "Create Multi-Container Pod",
+      "description": "Deploy a pod with multiple containers using YAML",
+      "code": "# pod.yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: multi-container-pod\nspec:\n  containers:\n  - name: web\n    image: nginx:1.20\n    ports:\n    - containerPort: 80\n  - name: sidecar\n    image: busybox\n    command: ['sh', '-c', 'while true; do echo \"Sidecar running\"; sleep 30; done']\n\n# Apply the configuration\nkubectl apply -f pod.yaml",
+      "language": "yaml",
+      "scenario": "Creating a pod with web server and sidecar container"
+    },
+    {
+      "title": "Rolling Update Deployment",
+      "description": "Perform a rolling update on a deployment",
+      "code": "# Create initial deployment\nkubectl create deployment web-app --image=nginx:1.19 --replicas=3\n\n# Update to new version\nkubectl set image deployment/web-app nginx=nginx:1.20\n\n# Monitor rollout status\nkubectl rollout status deployment/web-app\n\n# Check rollout history\nkubectl rollout history deployment/web-app\n\n# Rollback if needed\nkubectl rollout undo deployment/web-app",
+      "language": "bash",
+      "scenario": "Updating an application with zero downtime"
+    }
+  ],
+  "tags": ["pods", "deployments", "containers", "scaling", "updates"]
+}

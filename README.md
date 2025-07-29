@@ -100,9 +100,12 @@ This platform provides a **complete DevOps learning journey** from beginner to a
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/EmanuelGarciaDev/devops-learning-hub.git
    cd devops-learning-hub
    ```
+
+### 🌐 Live Demo
+**[👉 View Live Application](https://devops-learning-dozut7vfx-emanuelgarciadevs-projects.vercel.app)**
 
 2. **Install dependencies:**
    ```bash

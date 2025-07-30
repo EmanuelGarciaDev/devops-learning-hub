@@ -1,0 +1,117 @@
+{
+  "id": "docker-containers",
+  "toolId": "docker",
+  "name": "Docker Containers",
+  "description": "Managing Docker containers - running, stopping, and monitoring",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "Docker containers are running instances of Docker images. They are isolated processes that run your applications.",
+    "advanced": "Docker containers are runtime instances of Docker images that provide isolated execution environments with their own process space, network interface, and filesystem mount points, managed by the Docker daemon."
+  },
+  "commands": [
+    {
+      "command": "docker run",
+      "description": "Create and start a new container",
+      "example": "docker run -d -p 8080:80 nginx",
+      "flags": [
+        {
+          "flag": "-d",
+          "description": "Run container in detached mode (background)"
+        },
+        {
+          "flag": "-p",
+          "description": "Publish container port to host",
+          "example": "-p 8080:80"
+        },
+        {
+          "flag": "-v",
+          "description": "Mount volumes",
+          "example": "-v /host/path:/container/path"
+        },
+        {
+          "flag": "--name",
+          "description": "Assign a name to the container"
+        },
+        {
+          "flag": "-e",
+          "description": "Set environment variables"
+        }
+      ]
+    },
+    {
+      "command": "docker ps",
+      "description": "List running containers",
+      "example": "docker ps",
+      "flags": [
+        {
+          "flag": "-a",
+          "description": "Show all containers (including stopped)"
+        },
+        {
+          "flag": "-q",
+          "description": "Show only container IDs"
+        }
+      ]
+    },
+    {
+      "command": "docker stop",
+      "description": "Stop running containers",
+      "example": "docker stop container_name"
+    },
+    {
+      "command": "docker start",
+      "description": "Start stopped containers",
+      "example": "docker start container_name"
+    },
+    {
+      "command": "docker exec",
+      "description": "Execute commands in running containers",
+      "example": "docker exec -it container_name /bin/bash",
+      "flags": [
+        {
+          "flag": "-it",
+          "description": "Interactive terminal"
+        }
+      ]
+    },
+    {
+      "command": "docker logs",
+      "description": "View container logs",
+      "example": "docker logs container_name",
+      "flags": [
+        {
+          "flag": "-f",
+          "description": "Follow log output"
+        },
+        {
+          "flag": "--tail",
+          "description": "Show last N lines"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "Running a Web Server",
+      "description": "Start an Nginx web server with port mapping and custom content",
+      "code": "docker run -d \\\n  --name my-nginx \\\n  -p 8080:80 \\\n  -v $(pwd)/html:/usr/share/nginx/html \\\n  nginx:latest",
+      "language": "bash",
+      "scenario": "Hosting static website content using Nginx container"
+    },
+    {
+      "title": "Database Container with Persistence",
+      "description": "Run a PostgreSQL database with persistent data storage",
+      "code": "docker run -d \\\n  --name postgres-db \\\n  -e POSTGRES_DB=myapp \\\n  -e POSTGRES_USER=admin \\\n  -e POSTGRES_PASSWORD=secret \\\n  -v postgres_data:/var/lib/postgresql/data \\\n  -p 5432:5432 \\\n  postgres:13",
+      "language": "bash",
+      "scenario": "Setting up a development database with data persistence"
+    },
+    {
+      "title": "Container Health Monitoring",
+      "description": "Monitor container resource usage and health",
+      "code": "# View real-time container stats\ndocker stats\n\n# Inspect container details\ndocker inspect container_name\n\n# Check container health\ndocker exec container_name ps aux",
+      "language": "bash",
+      "scenario": "Monitoring and debugging container performance"
+    }
+  ],
+  "tags": ["containers", "runtime", "monitoring", "volumes", "networking", "ports"]
+}

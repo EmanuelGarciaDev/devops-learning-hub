@@ -1,0 +1,55 @@
+{
+  "id": "iam-security",
+  "toolId": "aws",
+  "name": "IAM Security",
+  "description": "Identity and Access Management for secure AWS resource access control",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "IAM is AWS's security system that controls who can access what resources in your AWS account, like giving keys to specific rooms in a building.",
+    "advanced": "AWS Identity and Access Management (IAM) provides fine-grained access control across AWS services through users, groups, roles, and policies using JSON-based policy documents with support for multi-factor authentication, temporary credentials, and cross-account access."
+  },
+  "commands": [
+    {
+      "command": "aws iam list-users",
+      "description": "List all IAM users",
+      "example": "aws iam list-users"
+    },
+    {
+      "command": "aws iam create-user",
+      "description": "Create a new IAM user",
+      "example": "aws iam create-user --user-name NewUser"
+    },
+    {
+      "command": "aws iam attach-user-policy",
+      "description": "Attach a policy to a user",
+      "example": "aws iam attach-user-policy --user-name NewUser --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess"
+    },
+    {
+      "command": "aws iam create-role",
+      "description": "Create an IAM role",
+      "example": "aws iam create-role --role-name EC2Role --assume-role-policy-document file://trust-policy.json"
+    },
+    {
+      "command": "aws iam list-attached-user-policies",
+      "description": "List policies attached to a user",
+      "example": "aws iam list-attached-user-policies --user-name NewUser"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Create Developer User",
+      "description": "Set up a new user with appropriate development permissions",
+      "code": "# Create user\naws iam create-user --user-name developer\n\n# Attach development policy\naws iam attach-user-policy --user-name developer --policy-arn arn:aws:iam::aws:policy/PowerUserAccess\n\n# Create access keys\naws iam create-access-key --user-name developer",
+      "language": "bash",
+      "scenario": "Creating a developer user with programmatic access"
+    },
+    {
+      "title": "EC2 Instance Role",
+      "description": "Create a role for EC2 instances to access S3",
+      "code": "# Create trust policy file\ncat > trust-policy.json << EOF\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"Service\": \"ec2.amazonaws.com\"\n      },\n      \"Action\": \"sts:AssumeRole\"\n    }\n  ]\n}\nEOF\n\n# Create role\naws iam create-role --role-name EC2S3AccessRole --assume-role-policy-document file://trust-policy.json\n\n# Attach S3 access policy\naws iam attach-role-policy --role-name EC2S3AccessRole --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
+      "language": "bash",
+      "scenario": "Setting up EC2 instance role for S3 access"
+    }
+  ],
+  "tags": ["iam", "security", "users", "roles", "policies", "permissions"]
+}

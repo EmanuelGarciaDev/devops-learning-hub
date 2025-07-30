@@ -1,0 +1,47 @@
+{
+  "id": "jenkins-basics",
+  "toolId": "jenkins",
+  "name": "Jenkins Fundamentals",
+  "description": "Understanding Jenkins automation server and CI/CD concepts",
+  "difficulty": "beginner",
+  "definitions": {
+    "beginner": "Jenkins is an automation tool that helps developers automatically build, test, and deploy their code whenever changes are made, like having a robot assistant for your development workflow.",
+    "advanced": "Jenkins is an open-source automation server that facilitates Continuous Integration and Continuous Deployment (CI/CD) through job orchestration, pipeline automation, and extensive plugin ecosystem supporting diverse development workflows and tool integrations."
+  },
+  "commands": [
+    {
+      "command": "java -jar jenkins.war",
+      "description": "Start Jenkins server locally",
+      "example": "java -jar jenkins.war --httpPort=8080"
+    },
+    {
+      "command": "jenkins-cli.jar",
+      "description": "Use Jenkins CLI for remote operations",
+      "example": "java -jar jenkins-cli.jar -s http://localhost:8080/ help"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Jenkins Installation with Docker",
+      "description": "Quick Jenkins setup using Docker container",
+      "code": "# Pull Jenkins LTS image\ndocker pull jenkins/jenkins:lts\n\n# Run Jenkins container\ndocker run -d \\\n  --name jenkins \\\n  -p 8080:8080 \\\n  -p 50000:50000 \\\n  -v jenkins_home:/var/jenkins_home \\\n  jenkins/jenkins:lts\n\n# Get initial admin password\ndocker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword\n\n# Access Jenkins at http://localhost:8080",
+      "language": "bash",
+      "scenario": "Setting up Jenkins development environment with Docker"
+    },
+    {
+      "title": "First Freestyle Job",
+      "description": "Create a simple build job for a Git repository",
+      "code": "# Job Configuration Steps:\n# 1. New Item -> Freestyle Project\n# 2. Source Code Management:\n#    - Git: https://github.com/username/my-app.git\n#    - Branch: */main\n# 3. Build Triggers:\n#    - Poll SCM: H/5 * * * *  (check every 5 minutes)\n# 4. Build Steps:\n#    - Execute shell:\necho \"Starting build...\"\nnpm install\nnpm test\nnpm run build\necho \"Build completed successfully!\"",
+      "language": "bash",
+      "scenario": "Creating your first automated build job"
+    },
+    {
+      "title": "Basic Pipeline Script",
+      "description": "Simple declarative pipeline for Node.js application",
+      "code": "pipeline {\n    agent any\n    \n    stages {\n        stage('Checkout') {\n            steps {\n                git 'https://github.com/username/my-node-app.git'\n            }\n        }\n        \n        stage('Install Dependencies') {\n            steps {\n                sh 'npm install'\n            }\n        }\n        \n        stage('Test') {\n            steps {\n                sh 'npm test'\n            }\n        }\n        \n        stage('Build') {\n            steps {\n                sh 'npm run build'\n            }\n        }\n        \n        stage('Deploy') {\n            steps {\n                echo 'Deploying application...'\n                // Add deployment steps here\n            }\n        }\n    }\n    \n    post {\n        always {\n            cleanWs()\n        }\n        success {\n            echo 'Pipeline succeeded!'\n        }\n        failure {\n            echo 'Pipeline failed!'\n        }\n    }\n}",
+      "language": "groovy",
+      "scenario": "Creating a complete CI/CD pipeline for Node.js application"
+    }
+  ],
+  "tags": ["jenkins", "ci-cd", "automation", "pipelines", "build"]
+}

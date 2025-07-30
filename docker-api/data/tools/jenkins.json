@@ -1,0 +1,9 @@
+{
+  "id": "jenkins",
+  "name": "Jenkins",
+  "description": "Open-source automation server for building CI/CD pipelines and DevOps workflows",
+  "category": "CI/CD",
+  "icon": "🔧",
+  "color": "blue",
+  "concepts": ["jenkins-basics", "pipelines", "build-automation"]
+}

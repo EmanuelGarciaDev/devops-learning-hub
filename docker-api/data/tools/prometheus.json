@@ -1,0 +1,9 @@
+{
+  "id": "prometheus",
+  "name": "Prometheus",
+  "description": "Open-source monitoring and alerting toolkit for cloud-native applications",
+  "category": "Monitoring & Observability",
+  "icon": "📊",
+  "color": "orange",
+  "concepts": ["prometheus-basics", "metrics-queries", "grafana-integration", "alertmanager"]
+}

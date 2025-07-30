@@ -1,0 +1,55 @@
+{
+  "id": "modules-workspaces",
+  "toolId": "terraform",
+  "name": "Modules & Workspaces",
+  "description": "Organizing and scaling Terraform configurations with modules and workspaces",
+  "difficulty": "advanced",
+  "definitions": {
+    "beginner": "Modules are reusable Terraform code packages, while workspaces let you manage multiple environments (like dev, staging, prod) with the same configuration.",
+    "advanced": "Modules enable code reusability, encapsulation, and composition by packaging Terraform configurations into reusable components. Workspaces provide state isolation for managing multiple environments or deployments with the same configuration."
+  },
+  "commands": [
+    {
+      "command": "terraform workspace list",
+      "description": "List all workspaces",
+      "example": "terraform workspace list"
+    },
+    {
+      "command": "terraform workspace new",
+      "description": "Create a new workspace",
+      "example": "terraform workspace new staging"
+    },
+    {
+      "command": "terraform workspace select",
+      "description": "Switch to a workspace",
+      "example": "terraform workspace select production"
+    },
+    {
+      "command": "terraform workspace delete",
+      "description": "Delete a workspace",
+      "example": "terraform workspace delete old-env"
+    },
+    {
+      "command": "terraform get",
+      "description": "Download and install modules",
+      "example": "terraform get -update"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Creating a Reusable Module",
+      "description": "Build a VPC module for consistent network setup",
+      "code": "# modules/vpc/main.tf\nvariable \"vpc_cidr\" {\n  description = \"CIDR block for VPC\"\n  type        = string\n  default     = \"10.0.0.0/16\"\n}\n\nvariable \"environment\" {\n  description = \"Environment name\"\n  type        = string\n}\n\nresource \"aws_vpc\" \"main\" {\n  cidr_block           = var.vpc_cidr\n  enable_dns_hostnames = true\n  enable_dns_support   = true\n\n  tags = {\n    Name        = \"${var.environment}-vpc\"\n    Environment = var.environment\n  }\n}\n\nresource \"aws_subnet\" \"public\" {\n  count = 2\n  \n  vpc_id                  = aws_vpc.main.id\n  cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)\n  availability_zone       = data.aws_availability_zones.available.names[count.index]\n  map_public_ip_on_launch = true\n\n  tags = {\n    Name = \"${var.environment}-public-subnet-${count.index + 1}\"\n  }\n}\n\ndata \"aws_availability_zones\" \"available\" {\n  state = \"available\"\n}\n\n# modules/vpc/outputs.tf\noutput \"vpc_id\" {\n  value = aws_vpc.main.id\n}\n\noutput \"public_subnet_ids\" {\n  value = aws_subnet.public[*].id\n}\n\n# Using the module in main.tf\nmodule \"vpc\" {\n  source = \"./modules/vpc\"\n  \n  vpc_cidr    = \"10.0.0.0/16\"\n  environment = terraform.workspace\n}",
+      "language": "hcl",
+      "scenario": "Creating reusable infrastructure components with modules"
+    },
+    {
+      "title": "Multi-Environment Setup",
+      "description": "Use workspaces for dev, staging, and production environments",
+      "code": "# main.tf with workspace-aware configuration\nlocals {\n  environment_configs = {\n    dev = {\n      instance_type = \"t2.micro\"\n      min_size      = 1\n      max_size      = 2\n    }\n    staging = {\n      instance_type = \"t2.small\"\n      min_size      = 2\n      max_size      = 4\n    }\n    production = {\n      instance_type = \"t2.medium\"\n      min_size      = 3\n      max_size      = 10\n    }\n  }\n  \n  config = local.environment_configs[terraform.workspace]\n}\n\nmodule \"vpc\" {\n  source = \"./modules/vpc\"\n  \n  environment = terraform.workspace\n}\n\nresource \"aws_instance\" \"app\" {\n  count = local.config.min_size\n  \n  ami           = \"ami-0c02fb55956c7d316\"\n  instance_type = local.config.instance_type\n  subnet_id     = module.vpc.public_subnet_ids[0]\n  \n  tags = {\n    Name        = \"${terraform.workspace}-app-${count.index + 1}\"\n    Environment = terraform.workspace\n  }\n}\n\n# Workspace commands\n# terraform workspace new dev\n# terraform workspace new staging\n# terraform workspace new production\n# terraform workspace select dev\n# terraform apply",
+      "language": "hcl",
+      "scenario": "Managing multiple environments with workspaces and environment-specific configurations"
+    }
+  ],
+  "tags": ["modules", "workspaces", "environments", "reusability", "scaling"]
+}

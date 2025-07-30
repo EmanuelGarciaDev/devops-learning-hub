@@ -1,0 +1,55 @@
+{
+  "id": "services-networking",
+  "toolId": "kubernetes",
+  "name": "Services & Networking",
+  "description": "Kubernetes service discovery and networking concepts",
+  "difficulty": "intermediate",
+  "definitions": {
+    "beginner": "Services provide a stable way to access your pods even when they get replaced, like having a permanent address that always points to your application.",
+    "advanced": "Kubernetes Services provide stable network endpoints for accessing pods through labels and selectors, with multiple service types (ClusterIP, NodePort, LoadBalancer) and advanced networking features like ingress controllers for HTTP routing."
+  },
+  "commands": [
+    {
+      "command": "kubectl get services",
+      "description": "List all services",
+      "example": "kubectl get svc -o wide"
+    },
+    {
+      "command": "kubectl expose deployment",
+      "description": "Create a service for a deployment",
+      "example": "kubectl expose deployment nginx --port=80 --type=ClusterIP"
+    },
+    {
+      "command": "kubectl port-forward",
+      "description": "Forward local port to pod/service",
+      "example": "kubectl port-forward service/nginx 8080:80"
+    },
+    {
+      "command": "kubectl get endpoints",
+      "description": "Show service endpoints",
+      "example": "kubectl get endpoints nginx"
+    },
+    {
+      "command": "kubectl get ingress",
+      "description": "List ingress resources",
+      "example": "kubectl get ingress -o wide"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Create ClusterIP Service",
+      "description": "Internal service for pod-to-pod communication",
+      "code": "# service.yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: web-service\nspec:\n  selector:\n    app: web\n  ports:\n  - protocol: TCP\n    port: 80\n    targetPort: 8080\n  type: ClusterIP\n\n# Apply service\nkubectl apply -f service.yaml\n\n# Test service\nkubectl run test-pod --image=busybox --restart=Never -- wget -O- web-service",
+      "language": "yaml",
+      "scenario": "Setting up internal service communication"
+    },
+    {
+      "title": "Ingress Configuration",
+      "description": "Expose HTTP services externally with ingress",
+      "code": "# ingress.yaml\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: web-ingress\n  annotations:\n    nginx.ingress.kubernetes.io/rewrite-target: /\nspec:\n  rules:\n  - host: myapp.local\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: web-service\n            port:\n              number: 80\n\n# Apply ingress\nkubectl apply -f ingress.yaml\n\n# Check ingress status\nkubectl get ingress web-ingress",
+      "language": "yaml",
+      "scenario": "Exposing application via HTTP ingress"
+    }
+  ],
+  "tags": ["services", "networking", "ingress", "load-balancing", "discovery"]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "kubernetes",
+  "name": "Kubernetes",
+  "description": "Open-source container orchestration platform for automating deployment, scaling, and management",
+  "category": "Container Orchestration",
+  "icon": "⚙️",
+  "color": "blue",
+  "concepts": ["k8s-basics", "pods-deployments", "services-networking", "configmaps-secrets"]
+}

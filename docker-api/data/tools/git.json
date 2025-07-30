@@ -1,0 +1,9 @@
+{
+  "id": "git",
+  "name": "Git & GitHub",
+  "description": "Distributed version control system and collaborative development platform for source code management",
+  "category": "Version Control",
+  "icon": "🌿",
+  "color": "orange",
+  "concepts": ["git-fundamentals", "branching-workflow", "collaboration", "advanced-git"]
+}

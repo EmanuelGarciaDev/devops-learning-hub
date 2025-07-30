@@ -1,0 +1,67 @@
+{
+  "id": "s3-storage",
+  "toolId": "aws",
+  "name": "S3 Storage",
+  "description": "Scalable object storage service for data backup, archival, and analytics",
+  "difficulty": "beginner",
+  "definitions": {
+    "beginner": "S3 is Amazon's cloud storage service where you can store files, photos, videos, and any type of data with unlimited capacity.",
+    "advanced": "Amazon S3 (Simple Storage Service) is an object storage service offering industry-leading scalability, data availability, security, and performance with features like versioning, lifecycle management, cross-region replication, and multiple storage classes for cost optimization."
+  },
+  "commands": [
+    {
+      "command": "aws s3 ls",
+      "description": "List S3 buckets or objects",
+      "example": "aws s3 ls s3://my-bucket/"
+    },
+    {
+      "command": "aws s3 mb",
+      "description": "Create a new S3 bucket",
+      "example": "aws s3 mb s3://my-unique-bucket-name"
+    },
+    {
+      "command": "aws s3 cp",
+      "description": "Copy files to/from S3",
+      "example": "aws s3 cp file.txt s3://my-bucket/",
+      "flags": [
+        {
+          "flag": "--recursive",
+          "description": "Copy directories recursively",
+          "example": "aws s3 cp mydir/ s3://my-bucket/ --recursive"
+        },
+        {
+          "flag": "--exclude",
+          "description": "Exclude files matching pattern",
+          "example": "aws s3 cp . s3://my-bucket/ --recursive --exclude '*.tmp'"
+        }
+      ]
+    },
+    {
+      "command": "aws s3 sync",
+      "description": "Synchronize directories with S3",
+      "example": "aws s3 sync ./local-folder s3://my-bucket/remote-folder"
+    },
+    {
+      "command": "aws s3 rm",
+      "description": "Remove objects from S3",
+      "example": "aws s3 rm s3://my-bucket/file.txt"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Create and Upload to Bucket",
+      "description": "Set up a new S3 bucket and upload files",
+      "code": "# Create a new bucket\naws s3 mb s3://my-company-data-2024\n\n# Upload a single file\naws s3 cp document.pdf s3://my-company-data-2024/\n\n# Upload entire directory\naws s3 sync ./website/ s3://my-company-data-2024/website/ --delete",
+      "language": "bash",
+      "scenario": "Setting up file storage and uploading website assets"
+    },
+    {
+      "title": "Website Hosting with S3",
+      "description": "Configure S3 bucket for static website hosting",
+      "code": "# Enable website hosting\naws s3 website s3://my-website-bucket --index-document index.html --error-document error.html\n\n# Upload website files\naws s3 sync ./build/ s3://my-website-bucket/ --delete\n\n# Set public read permissions\naws s3api put-bucket-policy --bucket my-website-bucket --policy file://bucket-policy.json",
+      "language": "bash",
+      "scenario": "Hosting a static website using S3"
+    }
+  ],
+  "tags": ["s3", "storage", "buckets", "files", "backup"]
+}

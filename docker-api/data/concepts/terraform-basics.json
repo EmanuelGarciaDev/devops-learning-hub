@@ -1,0 +1,60 @@
+{
+  "id": "terraform-basics",
+  "toolId": "terraform",
+  "name": "Terraform Fundamentals",
+  "description": "Core concepts of Infrastructure as Code with Terraform",
+  "difficulty": "beginner",
+  "definitions": {
+    "beginner": "Terraform is a tool that lets you write code to create and manage cloud infrastructure, like writing a recipe that automatically sets up servers, networks, and databases.",
+    "advanced": "Terraform is an Infrastructure as Code (IaC) tool that uses declarative configuration files to provision and manage infrastructure across multiple cloud providers using a consistent workflow with plan, apply, and destroy operations."
+  },
+  "commands": [
+    {
+      "command": "terraform version",
+      "description": "Check Terraform version",
+      "example": "terraform version"
+    },
+    {
+      "command": "terraform init",
+      "description": "Initialize Terraform working directory",
+      "example": "terraform init"
+    },
+    {
+      "command": "terraform plan",
+      "description": "Create execution plan showing changes",
+      "example": "terraform plan"
+    },
+    {
+      "command": "terraform apply",
+      "description": "Apply changes to infrastructure",
+      "example": "terraform apply"
+    },
+    {
+      "command": "terraform destroy",
+      "description": "Destroy all managed infrastructure",
+      "example": "terraform destroy"
+    },
+    {
+      "command": "terraform validate",
+      "description": "Validate configuration files",
+      "example": "terraform validate"
+    }
+  ],
+  "examples": [
+    {
+      "title": "First Terraform Configuration",
+      "description": "Create a simple AWS S3 bucket with Terraform",
+      "code": "# main.tf\nterraform {\n  required_providers {\n    aws = {\n      source  = \"hashicorp/aws\"\n      version = \"~> 5.0\"\n    }\n  }\n}\n\nprovider \"aws\" {\n  region = \"us-east-1\"\n}\n\nresource \"aws_s3_bucket\" \"example\" {\n  bucket = \"my-terraform-bucket-2024\"\n\n  tags = {\n    Name        = \"My bucket\"\n    Environment = \"Dev\"\n  }\n}\n\n# Initialize and apply\n# terraform init\n# terraform plan\n# terraform apply",
+      "language": "hcl",
+      "scenario": "Creating your first infrastructure resource with Terraform"
+    },
+    {
+      "title": "Terraform Workflow",
+      "description": "Complete workflow for infrastructure management",
+      "code": "# 1. Initialize project\nterraform init\n\n# 2. Format code\nterraform fmt\n\n# 3. Validate configuration\nterraform validate\n\n# 4. Plan changes\nterraform plan -out=tfplan\n\n# 5. Apply changes\nterraform apply tfplan\n\n# 6. Show current state\nterraform show\n\n# 7. Clean up\nterraform destroy",
+      "language": "bash",
+      "scenario": "Standard Terraform development and deployment workflow"
+    }
+  ],
+  "tags": ["terraform", "iac", "infrastructure", "automation", "provisioning"]
+}

@@ -5,5 +5,5 @@
   "category": "CI/CD",
   "icon": "🔧",
   "color": "blue",
-  "concepts": ["jenkins-basics", "pipelines", "build-automation", "plugins-integrations"]
+  "concepts": ["jenkins-basics", "pipelines", "build-automation"]
 }

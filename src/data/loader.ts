@@ -27,8 +27,19 @@ export class DataLoader {
       
       this.tools = [];
       for (const file of toolFiles) {
-        const toolData = JSON.parse(fs.readFileSync(path.join(toolsDir, file), 'utf-8'));
-        this.tools.push(toolData);
+        try {
+          const fileContent = fs.readFileSync(path.join(toolsDir, file), 'utf-8').trim();
+          if (!fileContent) {
+            console.warn(`Warning: Empty file ${file} in tools directory`);
+            continue;
+          }
+          const toolData = JSON.parse(fileContent);
+          this.tools.push(toolData);
+        } catch (error) {
+          console.error(`Error parsing tool file ${file}:`, error);
+          console.error(`File content length: ${fs.readFileSync(path.join(toolsDir, file), 'utf-8').length}`);
+          throw new Error(`Failed to parse ${file}: ${error}`);
+        }
       }
 
       // Load concepts
@@ -37,8 +48,19 @@ export class DataLoader {
       
       this.concepts = [];
       for (const file of conceptFiles) {
-        const conceptData = JSON.parse(fs.readFileSync(path.join(conceptsDir, file), 'utf-8'));
-        this.concepts.push(conceptData);
+        try {
+          const fileContent = fs.readFileSync(path.join(conceptsDir, file), 'utf-8').trim();
+          if (!fileContent) {
+            console.warn(`Warning: Empty file ${file} in concepts directory`);
+            continue;
+          }
+          const conceptData = JSON.parse(fileContent);
+          this.concepts.push(conceptData);
+        } catch (error) {
+          console.error(`Error parsing concept file ${file}:`, error);
+          console.error(`File content length: ${fs.readFileSync(path.join(conceptsDir, file), 'utf-8').length}`);
+          throw new Error(`Failed to parse ${file}: ${error}`);
+        }
       }
 
       this.dataLoaded = true;

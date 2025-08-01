@@ -16,6 +16,26 @@ export default async function Home() {
             Master DevOps and cloud technologies with comprehensive guides, 
             command references, and real-world examples.
           </p>
+          
+          {/* Navigation Links */}
+          <div className="flex justify-center space-x-4 mt-8">
+            <Link
+              href="/stack"
+              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2"
+            >
+              <span>🏗️</span>
+              <span>Technical Stack</span>
+            </Link>
+            <a
+              href="https://github.com/EmanuelGarciaDev/devops-learning-hub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2"
+            >
+              <span>📚</span>
+              <span>Source Code</span>
+            </a>
+          </div>
         </div>
 
         {/* Tools Grid */}

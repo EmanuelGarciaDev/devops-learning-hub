@@ -1,4 +1,4 @@
-import { Tool, Concept, LearningData } from './schema';
+import { Tool, Concept } from './schema';
 import fs from 'fs';
 import path from 'path';
 
@@ -121,4 +121,9 @@ export async function getConceptsByTool(toolId: string): Promise<Concept[]> {
 export async function getConcept(id: string): Promise<Concept | undefined> {
   await dataLoader.loadData();
   return dataLoader.getConcept(id);
+}
+
+export async function getAllConcepts(): Promise<Concept[]> {
+  await dataLoader.loadData();
+  return dataLoader.getAllConcepts();
 }

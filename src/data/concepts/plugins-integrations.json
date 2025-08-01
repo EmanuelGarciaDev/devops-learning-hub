@@ -1,0 +1,40 @@
+{
+  "id": "plugins-integrations",
+  "title": "Docker Plugins & Integrations",
+  "description": "Learn about Docker plugins, extensions, and integrations with other DevOps tools",
+  "category": "docker",
+  "difficulty": "intermediate",
+  "tags": ["docker", "plugins", "integrations", "ecosystem"],
+  "learningObjectives": [
+    "Understand Docker plugin architecture",
+    "Learn about popular Docker plugins",
+    "Explore Docker integrations with CI/CD tools",
+    "Configure Docker with monitoring solutions"
+  ],
+  "content": {
+    "introduction": "Docker's plugin system allows extending its functionality with third-party tools and custom integrations.",
+    "sections": [
+      {
+        "title": "Docker Plugin Types",
+        "content": "Docker supports various plugin types including volume, network, authorization, and log drivers.",
+        "codeExample": "# List installed plugins\ndocker plugin ls\n\n# Install a plugin\ndocker plugin install store/sumologic/docker-logging-driver:1.0.0\n\n# Enable a plugin\ndocker plugin enable sumologic/docker-logging-driver:1.0.0"
+      },
+      {
+        "title": "Popular Integrations",
+        "content": "Common Docker integrations include monitoring (Prometheus, Grafana), CI/CD (Jenkins, GitLab), and orchestration (Kubernetes, Docker Swarm).",
+        "codeExample": "# Docker with Prometheus monitoring\ndocker run -d \\\n  --name prometheus \\\n  -p 9090:9090 \\\n  -v prometheus.yml:/etc/prometheus/prometheus.yml \\\n  prom/prometheus"
+      }
+    ],
+    "exercises": [
+      {
+        "title": "Install and Configure a Plugin",
+        "description": "Install a Docker logging plugin and configure a container to use it",
+        "tasks": [
+          "Install a logging driver plugin",
+          "Configure a container to use the plugin",
+          "Verify plugin functionality"
+        ]
+      }
+    ]
+  }
+}

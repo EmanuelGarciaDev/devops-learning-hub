@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://devops-learning-hub.vercel.app/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Specific rules
+Allow: /stack
+Allow: /tools/
+Allow: /concepts/
+
+# Block any potential sensitive paths
+Disallow: /api/
+Disallow: /.env
+Disallow: /docker-api/
+
+# SEO optimization
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
